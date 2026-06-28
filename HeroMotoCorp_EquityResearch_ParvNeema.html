@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero MotoCorp — Equity Research Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #0f0f0f;
+    --ink-2: #3a3a3a;
+    --ink-3: #6b6b6b;
+    --ink-4: #999;
+    --rule: #ddd;
+    --rule-light: #f0f0f0;
+    --bg: #fafaf8;
+    --white: #fff;
+    --accent: #c0001a;
+    --accent-light: #fdf0f2;
+    --buy: #c0001a;
+    --buy-bg: #fdf0f2;
+    --serif: 'EB Garamond', Georgia, serif;
+    --sans: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  html { font-size: 16px; }
+  body { font-family: var(--sans); background: var(--bg); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+  /* ── Layout ── */
+  .page { max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem; }
+
+  /* ── Cover ── */
+  .cover { padding: 3.5rem 0 2.5rem; border-bottom: 2px solid var(--ink); margin-bottom: 2rem; }
+  .cover-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; color: var(--ink-3); text-transform: uppercase; margin-bottom: 1.5rem; }
+  .cover-ticker { display: inline-block; background: var(--accent); color: #fff; font-family: var(--mono); font-size: 12px; padding: 4px 10px; border-radius: 3px; margin-bottom: 1rem; }
+  .cover-title { font-family: var(--serif); font-size: 3rem; font-weight: 500; line-height: 1.15; color: var(--ink); margin-bottom: 0.75rem; }
+  .cover-subtitle { font-family: var(--serif); font-size: 1.35rem; color: var(--ink-2); font-style: italic; margin-bottom: 2rem; }
+  .cover-meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+  .cover-meta-item label { font-size: 10px; font-family: var(--mono); letter-spacing: 0.1em; color: var(--ink-4); text-transform: uppercase; display: block; margin-bottom: 4px; }
+  .cover-meta-item .val { font-size: 1.5rem; font-family: var(--serif); font-weight: 600; color: var(--ink); }
+  .cover-meta-item .val.buy { color: var(--buy); }
+  .cover-meta-item .val.target { color: var(--accent); }
+  .cover-meta-item .subval { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+  .rating-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--buy-bg); border: 1.5px solid var(--buy); color: var(--buy); padding: 6px 16px; border-radius: 4px; font-weight: 600; font-size: 13px; }
+  .rating-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--buy); }
+
+  /* ── Section ── */
+  section { margin-bottom: 3rem; }
+  .section-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--ink-4); text-transform: uppercase; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 0.5px solid var(--rule); }
+  h2 { font-family: var(--serif); font-size: 1.65rem; font-weight: 500; color: var(--ink); margin-bottom: 1rem; }
+  h3 { font-family: var(--sans); font-size: 0.95rem; font-weight: 600; color: var(--ink-2); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; font-size: 11px; }
+  p { font-size: 15px; color: var(--ink-2); line-height: 1.75; margin-bottom: 0.9rem; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── Key metrics strip ── */
+  .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 0.5px solid var(--rule); border-radius: 6px; overflow: hidden; margin-bottom: 2rem; }
+  .metric-cell { padding: 1.25rem 1rem; background: var(--white); border-right: 0.5px solid var(--rule); }
+  .metric-cell:last-child { border-right: none; }
+  .metric-cell:nth-child(n+5) { border-top: 0.5px solid var(--rule); }
+  .metric-label { font-size: 10px; font-family: var(--mono); letter-spacing: 0.08em; color: var(--ink-4); text-transform: uppercase; margin-bottom: 6px; }
+  .metric-value { font-size: 1.3rem; font-family: var(--serif); font-weight: 600; color: var(--ink); }
+  .metric-value.positive { color: var(--buy); }
+  .metric-sub { font-size: 11px; color: var(--ink-4); margin-top: 3px; }
+
+  /* ── Tables ── */
+  .table-wrap { overflow-x: auto; margin-bottom: 1.5rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-4); padding: 8px 12px; text-align: right; border-bottom: 1.5px solid var(--ink); white-space: nowrap; }
+  thead th:first-child { text-align: left; }
+  tbody td { padding: 8px 12px; text-align: right; border-bottom: 0.5px solid var(--rule-light); color: var(--ink-2); }
+  tbody td:first-child { text-align: left; color: var(--ink); font-weight: 500; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: var(--accent-light); }
+  .est { color: var(--accent); }
+  .table-note { font-size: 11px; color: var(--ink-4); font-style: italic; margin-top: 6px; }
+  .highlight-row td { background: var(--accent-light); font-weight: 600; color: var(--accent) !important; }
+
+  /* ── Chart containers ── */
+  .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+  .chart-box { background: var(--white); border: 0.5px solid var(--rule); border-radius: 6px; padding: 1.25rem; }
+  .chart-title { font-size: 11px; font-family: var(--mono); letter-spacing: 0.08em; color: var(--ink-3); text-transform: uppercase; margin-bottom: 1rem; }
+  .chart-canvas-wrap { position: relative; height: 200px; }
+  .chart-canvas-wrap-tall { position: relative; height: 260px; }
+  .chart-full { background: var(--white); border: 0.5px solid var(--rule); border-radius: 6px; padding: 1.25rem; margin-bottom: 1.5rem; }
+
+  /* ── Valuation box ── */
+  .val-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  .val-card { background: var(--white); border: 0.5px solid var(--rule); border-radius: 6px; padding: 1.25rem; text-align: center; }
+  .val-card.primary { border-color: var(--accent); background: var(--accent-light); }
+  .val-method { font-size: 10px; font-family: var(--mono); letter-spacing: 0.1em; color: var(--ink-4); text-transform: uppercase; margin-bottom: 8px; }
+  .val-price { font-family: var(--serif); font-size: 2rem; font-weight: 600; color: var(--ink); }
+  .val-card.primary .val-price { color: var(--accent); }
+  .val-weight { font-size: 11px; color: var(--ink-4); margin-top: 4px; }
+  .blended-box { background: var(--buy-bg); border: 1.5px solid var(--buy); border-radius: 6px; padding: 1.5rem; text-align: center; }
+  .blended-label { font-size: 11px; font-family: var(--mono); letter-spacing: 0.1em; color: var(--buy); text-transform: uppercase; margin-bottom: 8px; }
+  .blended-price { font-family: var(--serif); font-size: 3rem; font-weight: 600; color: var(--buy); }
+  .blended-upside { font-size: 13px; color: var(--buy); margin-top: 6px; font-weight: 500; }
+
+  /* ── Assumptions table inline ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+  /* ── Risk table ── */
+  .risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .risk-item { background: var(--white); border: 0.5px solid var(--rule); border-radius: 6px; padding: 1rem 1.25rem; }
+  .risk-item.downside { border-left: 3px solid #8b0000; }
+  .risk-item.upside { border-left: 3px solid var(--buy); }
+  .risk-header { font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+  .risk-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .risk-item.downside .risk-dot { background: #8b0000; }
+  .risk-item.upside .risk-dot { background: var(--buy); }
+  .risk-body { font-size: 12px; color: var(--ink-3); line-height: 1.6; }
+
+  /* ── Segment donut ── */
+  .segment-row { display: flex; align-items: center; gap: 1.5rem; }
+  .segment-legend { flex: 1; }
+  .seg-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 12px; color: var(--ink-2); }
+  .seg-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+  .seg-pct { margin-left: auto; font-weight: 600; color: var(--ink); }
+
+  /* ── Footer ── */
+  .footer { border-top: 0.5px solid var(--rule); padding-top: 1.5rem; margin-top: 3rem; }
+  .footer-text { font-size: 10px; color: var(--ink-4); line-height: 1.7; }
+  .footer-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+  .footer-meta span { font-family: var(--mono); font-size: 10px; color: var(--ink-4); }
+
+  /* ── Bull Bear ── */
+  .thesis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+  .thesis-side { background: var(--white); border: 0.5px solid var(--rule); border-radius: 6px; overflow: hidden; }
+  .thesis-header { padding: 0.75rem 1rem; font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+  .thesis-header.bull { background: var(--buy-bg); color: var(--buy); }
+  .thesis-header.bear { background: #f5e8e8; color: #6b0000; }
+  .thesis-body { padding: 1rem; }
+  .thesis-point { display: flex; gap: 8px; margin-bottom: 10px; font-size: 13px; color: var(--ink-2); line-height: 1.5; }
+  .thesis-point:last-child { margin-bottom: 0; }
+  .thesis-icon { flex-shrink: 0; margin-top: 2px; font-size: 12px; }
+
+  /* ── WACC box ── */
+  .wacc-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-bottom: 1rem; }
+  .wacc-item { background: var(--white); border: 0.5px solid var(--rule); border-radius: 6px; padding: 1rem; text-align: center; }
+  .wacc-label { font-family: var(--mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+  .wacc-val { font-family: var(--serif); font-size: 1.5rem; font-weight: 600; color: var(--ink); }
+
+  @media print {
+    body { background: white; }
+    .chart-box, .chart-full, .metric-cell, .val-card { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-eyebrow">Equity Research · Consumer Discretionary · Two-Wheeler OEM</div>
+    <div><span class="cover-ticker">HEROMOTOCO:NSE</span></div>
+    <h1 class="cover-title">Hero MotoCorp Ltd.</h1>
+    <div class="cover-subtitle">Commanding the Commuter Segment; Premium & EV Pivot to Drive the Next Re-Rating</div>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <label>Rating</label>
+        <div class="rating-badge"><span class="rating-dot"></span> BUY</div>
+      </div>
+      <div class="cover-meta-item">
+        <label>Blended Target Price</label>
+        <div class="val" style="font-family:var(--serif);font-size:1.5rem;font-weight:600;color:var(--buy)">₹7,035</div>
+        <div class="subval">vs CMP ₹5,472 (+28.5%)</div>
+      </div>
+      <div class="cover-meta-item">
+        <label>DCF Value</label>
+        <div class="val target" style="font-family:var(--serif);font-size:1.5rem;font-weight:600;color:var(--accent)">₹5,457</div>
+        <div class="subval">Weight: 70%</div>
+      </div>
+      <div class="cover-meta-item">
+        <label>Rel. Val. Price</label>
+        <div class="val" style="font-family:var(--serif);font-size:1.5rem;font-weight:600;color:var(--ink)">₹10,718</div>
+        <div class="subval">Weight: 30%</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:2rem;align-items:center;flex-wrap:wrap">
+      <div style="font-size:12px;color:var(--ink-3)">Model Period: FY21–FY30E</div>
+      <div style="font-size:12px;color:var(--ink-3)">Market Cap: ~₹1.09 Lakh Cr</div>
+      <div style="font-size:12px;color:var(--ink-3)">Report Date: June 2026</div>
+      <div style="font-size:12px;color:var(--ink-3)">Analyst: Parv Neema</div>
+    </div>
+  </div>
+
+  <!-- SNAPSHOT METRICS -->
+  <div class="metrics-grid">
+    <div class="metric-cell">
+      <div class="metric-label">Revenue FY25</div>
+      <div class="metric-value">₹40,923 Cr</div>
+      <div class="metric-sub">FY30E: ₹70,423 Cr</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-label">EBIT FY25</div>
+      <div class="metric-value">₹6,004 Cr</div>
+      <div class="metric-sub">EBIT Margin: 14.7%</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-label">PAT FY25</div>
+      <div class="metric-value">₹4,376 Cr</div>
+      <div class="metric-sub">FY30E PAT: ₹7,847 Cr</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-label">WACC</div>
+      <div class="metric-value">13.17%</div>
+      <div class="metric-sub">Terminal Growth: 6.35%</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-label">Enterprise Value (DCF)</div>
+      <div class="metric-value">₹1,00,465 Cr</div>
+      <div class="metric-sub">Equity Value: ₹1,09,244 Cr</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-label">EPS NTM (Relative Val.)</div>
+      <div class="metric-value">₹281.05</div>
+      <div class="metric-sub">Peer Avg P/E: 38.1x</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-label">Volume FY25</div>
+      <div class="metric-value">59 Lakh units</div>
+      <div class="metric-sub">FY30E: 77.2 Lakh units</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-label positive">Upside / Downside</div>
+      <div class="metric-value positive">+28.5%</div>
+      <div class="metric-sub">12-month horizon</div>
+    </div>
+  </div>
+
+  <!-- INVESTMENT THESIS -->
+  <section>
+    <div class="section-label">Investment Thesis</div>
+    <h2>A duopoly incumbent pivoting toward premiumisation and EVs</h2>
+    <p>Hero MotoCorp is the world's largest two-wheeler manufacturer by volume, commanding roughly 34–36% market share of domestic two-wheelers. For over two decades, the company has earned its dominant position through unmatched distribution (10,000+ touchpoints) and brand strength in the mass/commuter category. Our thesis rests on three pillars: (1) a resilient core commuter franchise that generates superior free cash flows, (2) a credible premiumisation play—driven by the 125cc Xtreme & Xpulse portfolio and the Premia superbike tie-up with Harley-Davidson and Jawa-owner zero motorcycles—and (3) early-stage EV optionality via the Vida EV platform and a strategic stake in Ather Energy.</p>
+    <p>The model projects revenue growing at ~11.4% CAGR from FY25–FY30E to ₹70,423 Cr, supported by 5.5–6.3% volume CAGR alongside steady realization growth of ~4.5–5.6% annually as product mix shifts upward. Our FCFF-based DCF (15-year explicit period, terminal growth 6.35%) yields an intrinsic value of ₹5,457/share. Blending this with a peer-relative valuation at 38.1x NTM P/E (TVS, Bajaj, Eicher median) produces a blended target price of ₹7,035, representing 28.5% upside from the CMP of ₹5,472.</p>
+
+    <div class="thesis-grid" style="margin-top:1.5rem">
+      <div class="thesis-side">
+        <div class="thesis-header bull">▲ Bull Case</div>
+        <div class="thesis-body">
+          <div class="thesis-point"><span class="thesis-icon">→</span>Premiumisation drives 5–7% realization growth outpacing volume, expanding EBIT margins toward 16–17% by FY28E</div>
+          <div class="thesis-point"><span class="thesis-icon">→</span>Vida EV ramp-up captures early EV market share; Ather stake provides meaningful upside optionality</div>
+          <div class="thesis-point"><span class="thesis-icon">→</span>Brazil and Philippines launches unlock export growth trajectory; export volume growing 20–30% YoY</div>
+          <div class="thesis-point"><span class="thesis-icon">→</span>Debt-free balance sheet with ₹9,500+ Cr cash by FY26E enables buybacks or accelerated R&D</div>
+        </div>
+      </div>
+      <div class="thesis-side">
+        <div class="thesis-header bear">▼ Bear Case</div>
+        <div class="thesis-body">
+          <div class="thesis-point"><span class="thesis-icon">→</span>Bajaj and TVS erode market share in premium segment; Hero's 125cc positioning faces competition from Honda Activa & CB series</div>
+          <div class="thesis-point"><span class="thesis-icon">→</span>EV disruption compresses commuter segment margins faster than Hero's EV portfolio can scale</div>
+          <div class="thesis-point"><span class="thesis-icon">→</span>Commodity cost inflation (steel, aluminum) squeezes gross margins in a price-sensitive market</div>
+          <div class="thesis-point"><span class="thesis-icon">→</span>Rural demand weakness on below-normal monsoons delays volume recovery in entry segment</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINANCIAL MODEL SUMMARY -->
+  <section>
+    <div class="section-label">Financial Model — P&amp;L Summary</div>
+    <h2>Revenue growth accelerating; margins to hold as premiumisation offsets cost pressures</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Particulars (₹ Cr)</th>
+            <th>FY21</th><th>FY22</th><th>FY23</th><th>FY24</th><th>FY25</th>
+            <th class="est">FY26E</th><th class="est">FY27E</th><th class="est">FY28E</th><th class="est">FY29E</th><th class="est">FY30E</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Revenue from Operations</td>
+            <td>30,959</td><td>29,551</td><td>34,158</td><td>37,789</td><td>40,923</td>
+            <td class="est">47,096</td><td class="est">52,304</td><td class="est">57,893</td><td class="est">63,992</td><td class="est">70,423</td>
+          </tr>
+          <tr>
+            <td>YoY Growth %</td>
+            <td>—</td><td>(4.6%)</td><td>15.6%</td><td>10.6%</td><td>8.3%</td>
+            <td class="est">15.1%</td><td class="est">11.1%</td><td class="est">10.7%</td><td class="est">10.5%</td><td class="est">10.1%</td>
+          </tr>
+          <tr>
+            <td>Total Expenses</td>
+            <td>27,621</td><td>26,849</td><td>30,867</td><td>33,273</td><td>35,873</td>
+            <td class="est">41,520</td><td class="est">45,822</td><td class="est">50,875</td><td class="est">56,117</td><td class="est">62,049</td>
+          </tr>
+          <tr class="highlight-row">
+            <td>EBIT</td>
+            <td>3,896</td><td>3,111</td><td>3,969</td><td>5,167</td><td>6,004</td>
+            <td>7,070</td><td>8,146</td><td>8,867</td><td>9,907</td><td>10,608</td>
+          </tr>
+          <tr>
+            <td>EBIT Margin %</td>
+            <td>12.6%</td><td>10.5%</td><td>11.6%</td><td>13.7%</td><td>14.7%</td>
+            <td class="est">15.0%</td><td class="est">15.6%</td><td class="est">15.3%</td><td class="est">15.5%</td><td class="est">15.1%</td>
+          </tr>
+          <tr>
+            <td>PBT</td>
+            <td>3,849</td><td>3,058</td><td>3,864</td><td>5,090</td><td>5,934</td>
+            <td class="est">6,988</td><td class="est">8,050</td><td class="est">8,755</td><td class="est">9,795</td><td class="est">10,487</td>
+          </tr>
+          <tr class="highlight-row">
+            <td>PAT (Net Profit)</td>
+            <td>2,936</td><td>2,329</td><td>2,800</td><td>3,742</td><td>4,376</td>
+            <td>5,229</td><td>6,024</td><td>6,552</td><td>7,329</td><td>7,847</td>
+          </tr>
+          <tr>
+            <td>PAT Margin %</td>
+            <td>9.5%</td><td>7.9%</td><td>8.2%</td><td>9.9%</td><td>10.7%</td>
+            <td class="est">11.1%</td><td class="est">11.5%</td><td class="est">11.3%</td><td class="est">11.5%</td><td class="est">11.1%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">E = Estimated. Tax rate assumed at 25.17% for FY26–FY30E based on effective FY25 rate. All figures in ₹ Crore.</p>
+
+    <div class="chart-grid">
+      <div class="chart-box">
+        <div class="chart-title">Revenue & PAT trend (₹ Cr)</div>
+        <div class="chart-canvas-wrap"><canvas id="c1" role="img" aria-label="Revenue and PAT trend FY21 to FY30E"></canvas></div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">EBIT Margin % trend</div>
+        <div class="chart-canvas-wrap"><canvas id="c2" role="img" aria-label="EBIT margin percentage FY21 to FY30E"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVENUE MODEL -->
+  <section>
+    <div class="section-label">Revenue Model — Two-Wheeler Volume & Realization</div>
+    <h2>Core volume growing steadily; realization expansion driven by mix upgrade</h2>
+    <p>Revenue is modelled using a bottom-up approach: domestic and export volume projections by segment, multiplied by realization per vehicle (RPV), plus spare parts, dealer support services, and other operating revenues. RPV for FY26E is modelled at ₹622.7k (+5.6% YoY), per management guidance on premiumisation and EV blend.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Volume Driver</th>
+            <th>FY22</th><th>FY23</th><th>FY24</th><th>FY25</th>
+            <th class="est">FY26E</th><th class="est">FY27E</th><th class="est">FY28E</th><th class="est">FY29E</th><th class="est">FY30E</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Total Volume (Lakh units)</td>
+            <td>49.0</td><td>53.0</td><td>56.0</td><td>59.0</td>
+            <td class="est">62.7</td><td class="est">66.3</td><td class="est">70.1</td><td class="est">73.9</td><td class="est">77.2</td>
+          </tr>
+          <tr>
+            <td>Domestic (Lakh units)</td>
+            <td>46.4</td><td>51.6</td><td>54.2</td><td>55.4</td>
+            <td class="est">60.2</td><td class="est">63.7</td><td class="est">67.4</td><td class="est">71.2</td><td class="est">74.6</td>
+          </tr>
+          <tr>
+            <td>Export (Lakh units)</td>
+            <td>2.6</td><td>1.4</td><td>1.8</td><td>3.6</td>
+            <td class="est">2.5</td><td class="est">2.6</td><td class="est">2.7</td><td class="est">2.7</td><td class="est">2.7</td>
+          </tr>
+          <tr class="highlight-row">
+            <td>Realization / vehicle (₹k)</td>
+            <td>454</td><td>557</td><td>575</td><td>590</td>
+            <td>623</td><td>655</td><td>685</td><td>715</td><td>751</td>
+          </tr>
+          <tr>
+            <td>Realization Growth %</td>
+            <td>(7.1%)</td><td>8.2%</td><td>4.4%</td><td>2.7%</td>
+            <td class="est">5.6%</td><td class="est">5.2%</td><td class="est">4.5%</td><td class="est">4.5%</td><td class="est">5.0%</td>
+          </tr>
+          <tr>
+            <td>Capacity (Lakh units)</td>
+            <td>95</td><td>95</td><td>95</td><td>95</td>
+            <td class="est">95</td><td class="est">95</td><td class="est">97</td><td class="est">99</td><td class="est">101</td>
+          </tr>
+          <tr>
+            <td>Capacity Utilization %</td>
+            <td>51.6%</td><td>55.8%</td><td>58.9%</td><td>62.1%</td>
+            <td class="est">66.0%</td><td class="est">69.8%</td><td class="est">72.2%</td><td class="est">74.7%</td><td class="est">76.5%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chart-full">
+      <div class="chart-title">Domestic volume breakdown by segment (Lakh units)</div>
+      <div class="chart-canvas-wrap-tall"><canvas id="c3" role="img" aria-label="Domestic volume breakdown by motorcycle segment FY22 to FY30E"></canvas></div>
+    </div>
+
+    <div style="margin-top:1rem">
+      <h3>Strategic Growth Levers</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:0.75rem">
+        <div style="background:var(--white);border:0.5px solid var(--rule);border-radius:6px;padding:1rem;">
+          <div style="font-size:11px;font-family:var(--mono);color:var(--ink-4);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em">Core</div>
+          <div style="font-size:13px;color:var(--ink-2);line-height:1.6">Defend 100cc deluxe & scooter leadership through network density and refresh cycles. 100cc segment: 37.7→47.1 lakh units by FY30E.</div>
+        </div>
+        <div style="background:var(--white);border:0.5px solid var(--rule);border-radius:6px;padding:1rem;">
+          <div style="font-size:11px;font-family:var(--mono);color:var(--ink-4);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em">Premium</div>
+          <div style="font-size:13px;color:var(--ink-2);line-height:1.6">Premium+EV: 0.7→1.6 lakh units by FY30E (+12–25% YoY). Harley-Davidson and Jawa tie-ups anchor the super-premium aspirational play.</div>
+        </div>
+        <div style="background:var(--white);border:0.5px solid var(--rule);border-radius:6px;padding:1rem;">
+          <div style="font-size:11px;font-family:var(--mono);color:var(--ink-4);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em">Global</div>
+          <div style="font-size:13px;color:var(--ink-2);line-height:1.6">Export expansion: Brazil ops start Q4 FY25, Philippines launched Aug'24. South East Asia roadmap adds meaningful volume by FY27–28E.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BALANCE SHEET -->
+  <section>
+    <div class="section-label">Balance Sheet & Cash Flow Analysis</div>
+    <h2>Fortress balance sheet; cash pile to reach ₹32,896 Cr by FY30E</h2>
+    <p>Hero operates with a near debt-free balance sheet (net cash positive since FY24). The dramatic cash accretion reflects robust FCFF generation outpacing capex requirements. Total borrowings are modest at ₹484 Cr (FY26E), against cash & equivalents of ₹9,521 Cr — a net cash position of ~₹9,039 Cr. This affords significant flexibility for strategic acquisitions, EV R&D, and shareholder returns.</p>
+
+    <div class="chart-grid">
+      <div class="chart-box">
+        <div class="chart-title">Cash & equivalents (₹ Cr)</div>
+        <div class="chart-canvas-wrap"><canvas id="c4" role="img" aria-label="Cash and equivalents build from FY21 to FY30E"></canvas></div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">Cash flow from operations vs capex (₹ Cr)</div>
+        <div class="chart-canvas-wrap"><canvas id="c5" role="img" aria-label="Operating cash flow vs capex FY26E to FY30E"></canvas></div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Balance Sheet (₹ Cr)</th>
+            <th>FY23</th><th>FY24</th><th>FY25</th>
+            <th class="est">FY26E</th><th class="est">FY27E</th><th class="est">FY28E</th><th class="est">FY30E</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Total Assets</td><td>23,917</td><td>26,153</td><td>28,390</td><td class="est">38,814</td><td class="est">45,638</td><td class="est">54,096</td><td class="est">71,948</td></tr>
+          <tr><td>Cash & Equivalents</td><td>423</td><td>696</td><td>574</td><td class="est">9,521</td><td class="est">14,092</td><td class="est">20,481</td><td class="est">32,896</td></tr>
+          <tr><td>Total Equity</td><td>16,781</td><td>17,835</td><td>19,404</td><td class="est">24,637</td><td class="est">30,660</td><td class="est">37,211</td><td class="est">52,387</td></tr>
+          <tr class="highlight-row"><td>Total Borrowings</td><td>313</td><td>363</td><td>457</td><td>484</td><td>543</td><td>589</td><td>729</td></tr>
+          <tr><td>Net PPE</td><td>6,159</td><td>6,232</td><td>6,283</td><td class="est">6,921</td><td class="est">7,530</td><td class="est">8,175</td><td class="est">9,655</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- DCF VALUATION -->
+  <section>
+    <div class="section-label">DCF Valuation — FCFF Based</div>
+    <h2>Discounted cash flow: ₹5,457 intrinsic value per share</h2>
+    <p>We value Hero using a 15-year FCFF model (FY26–FY40E) discounted at WACC of 13.17%, with terminal growth of 6.35% (conservative relative to India's nominal GDP growth trajectory). The explicit period captures the premiumisation + EV ramp cycle, with FCFF growing from ₹8,840 Cr in FY26E to ₹16,525 Cr by FY40E.</p>
+
+    <div class="wacc-grid">
+      <div class="wacc-item">
+        <div class="wacc-label">WACC</div>
+        <div class="wacc-val">13.17%</div>
+      </div>
+      <div class="wacc-item">
+        <div class="wacc-label">Terminal Growth Rate</div>
+        <div class="wacc-val">6.35%</div>
+      </div>
+      <div class="wacc-item">
+        <div class="wacc-label">Effective Tax Rate</div>
+        <div class="wacc-val">25.17%</div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>DCF Build-Up (₹ Cr)</th>
+            <th class="est">FY26E</th><th class="est">FY27E</th><th class="est">FY28E</th><th class="est">FY29E</th><th class="est">FY30E</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>EBIT</td><td class="est">7,070</td><td class="est">8,146</td><td class="est">8,867</td><td class="est">9,907</td><td class="est">10,608</td></tr>
+          <tr><td>NOPAT = EBIT×(1–t)</td><td class="est">5,291</td><td class="est">6,096</td><td class="est">6,635</td><td class="est">7,413</td><td class="est">7,938</td></tr>
+          <tr><td>Add: Depreciation</td><td class="est">846</td><td class="est">913</td><td class="est">999</td><td class="est">1,095</td><td class="est">1,194</td></tr>
+          <tr><td>Less: Change in NWC</td><td class="est">4,188</td><td class="est">(873)</td><td class="est">656</td><td class="est">(489)</td><td class="est">(835)</td></tr>
+          <tr><td>Less: Capex</td><td class="est">(1,484)</td><td class="est">(1,522)</td><td class="est">(1,644)</td><td class="est">(1,798)</td><td class="est">(1,971)</td></tr>
+          <tr class="highlight-row"><td>FCFF</td><td>8,840</td><td>4,614</td><td>6,646</td><td>6,221</td><td>6,326</td></tr>
+          <tr><td>Discounted FCFF</td><td class="est">8,312</td><td class="est">3,833</td><td class="est">4,879</td><td class="est">4,036</td><td class="est">3,626</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="val-grid">
+      <div class="val-card">
+        <div class="val-method">NPV of Explicit CFs</div>
+        <div class="val-price">₹57,566 Cr</div>
+        <div class="val-weight">FY26–FY40E, 15 years</div>
+      </div>
+      <div class="val-card">
+        <div class="val-method">NPV of Terminal Value</div>
+        <div class="val-price">₹42,899 Cr</div>
+        <div class="val-weight">TV: ₹2,57,809 Cr</div>
+      </div>
+      <div class="val-card primary">
+        <div class="val-method">Enterprise Value</div>
+        <div class="val-price">₹1,00,465 Cr</div>
+        <div class="val-weight">Less Debt + Cash adj.</div>
+      </div>
+    </div>
+
+    <div class="val-grid" style="margin-top:0">
+      <div class="val-card">
+        <div class="val-method">Less: Net Debt</div>
+        <div class="val-price" style="font-size:1.5rem">(₹742 Cr)</div>
+        <div class="val-weight">Borrowings at FY26E</div>
+      </div>
+      <div class="val-card">
+        <div class="val-method">Add: Cash</div>
+        <div class="val-price" style="font-size:1.5rem">₹9,521 Cr</div>
+        <div class="val-weight">Cash at FY26E</div>
+      </div>
+      <div class="val-card">
+        <div class="val-method">Shares Outstanding</div>
+        <div class="val-price" style="font-size:1.5rem">20.02 Cr</div>
+        <div class="val-weight">As on FY26E</div>
+      </div>
+    </div>
+
+    <div class="blended-box">
+      <div class="blended-label">Blended Target Price (DCF 70% + Relative 30%)</div>
+      <div class="blended-price">₹7,035</div>
+      <div class="blended-upside">vs CMP ₹5,472 → Upside: +28.5% | Rating: BUY</div>
+    </div>
+  </section>
+
+  <!-- RELATIVE VALUATION -->
+  <section>
+    <div class="section-label">Relative Valuation — P/E Peer Comparison</div>
+    <h2>Peer set implies ₹10,718 on P/E; blended approach tempers optimism</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Company</th><th>P/E Multiple (NTM)</th><th>Implied Hero Price</th><th>Note</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>TVS Motor Company</td><td>52.4x</td><td>—</td><td>Premium for EV leadership & diversified portfolio</td></tr>
+          <tr><td>Bajaj Auto</td><td>26.7x</td><td>—</td><td>Discount for export cyclicality</td></tr>
+          <tr><td>Eicher Motors</td><td>35.3x</td><td>—</td><td>Royal Enfield premium brand moat</td></tr>
+          <tr class="highlight-row"><td>Peer Average</td><td>38.1x</td><td>₹10,718</td><td>Applied to Hero NTM EPS of ₹281.05</td></tr>
+          <tr><td><strong>DCF Value</strong></td><td>—</td><td>₹5,457</td><td>70% weight in blended valuation</td></tr>
+          <tr><td><strong>Blended Target</strong></td><td>—</td><td><strong>₹7,035</strong></td><td>DCF 70% + Relative 30%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The relative valuation at ₹10,718 reflects significant market optimism for the EV narrative embedded in peer valuations. We apply a conservative 30% weight given Hero's still-nascent EV penetration relative to TVS and Bajaj, where EV revenues are more meaningful contributors. The 70/30 blended approach reflects our conviction in the fundamental cash flow model while acknowledging re-rating potential as EV volumes inflect.</p>
+  </section>
+
+  <!-- KEY ASSUMPTIONS -->
+  <section>
+    <div class="section-label">Key Model Assumptions</div>
+    <h2>Assumption transparency</h2>
+    <div class="two-col">
+      <div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>P&amp;L Assumptions</th><th>FY26E–FY30E Basis</th></tr></thead>
+            <tbody>
+              <tr><td>Revenue Growth</td><td>10–15%, volume + RPV</td></tr>
+              <tr><td>Material Cost % Rev</td><td>~66.2–66.9%</td></tr>
+              <tr><td>Employee Costs % Rev</td><td>~6.5–6.6%</td></tr>
+              <tr><td>Other Expenses % Rev</td><td>~11.5–12.0%</td></tr>
+              <tr><td>D&amp;A % Gross Assets</td><td>~5.5–5.7%</td></tr>
+              <tr><td>Effective Tax Rate</td><td>25.17%</td></tr>
+              <tr><td>Other Income % Rev</td><td>3.0%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>WC / Capex Assumptions</th><th>Basis</th></tr></thead>
+            <tbody>
+              <tr><td>Days Inventory Outstanding</td><td>11 days (FY26E+)</td></tr>
+              <tr><td>Maintenance Capex</td><td>= Annual Depreciation</td></tr>
+              <tr><td>Growth Capex</td><td>80% × Maintenance Capex</td></tr>
+              <tr><td>Total Capex FY26E</td><td>₹1,484 Cr</td></tr>
+              <tr><td>Capacity Expansion</td><td>+2L/yr from FY28E</td></tr>
+              <tr><td>Terminal Growth</td><td>6.35% (nominal GDP)</td></tr>
+              <tr><td>WACC</td><td>13.17%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RISKS -->
+  <section>
+    <div class="section-label">Risk Analysis</div>
+    <h2>Key risks to our thesis</h2>
+    <div class="risk-grid">
+      <div class="risk-item downside">
+        <div class="risk-header"><span class="risk-dot"></span>Market Share Erosion</div>
+        <div class="risk-body">Intensifying competition from Bajaj and Honda in the commuter segment could compress volumes below our projections. Every 1% market share loss ≈ ₹600–800 Cr revenue impact.</div>
+      </div>
+      <div class="risk-item downside">
+        <div class="risk-header"><span class="risk-dot"></span>EV Disruption</div>
+        <div class="risk-body">Faster-than-expected EV adoption could cannibalize ICE commuter sales before Hero's Vida platform achieves competitive cost parity. Vida volumes currently sub-scale.</div>
+      </div>
+      <div class="risk-item downside">
+        <div class="risk-header"><span class="risk-dot"></span>Commodity Cost Pressure</div>
+        <div class="risk-body">Steel, aluminium, and copper form ~50–55% of material cost. A 10% commodity spike without price pass-through could compress EBIT margin by ~100–150 bps.</div>
+      </div>
+      <div class="risk-item downside">
+        <div class="risk-header"><span class="risk-dot"></span>Rural Demand Weakness</div>
+        <div class="risk-body">Entry-segment (~10 lakh units domestically) is highly rural and monsoon-sensitive. A sub-normal monsoon creates near-term volume headwinds of 3–5%.</div>
+      </div>
+      <div class="risk-item upside">
+        <div class="risk-header"><span class="risk-dot"></span>Premiumisation Surprise</div>
+        <div class="risk-body">If premium/EV mix surpasses our 1.6 lakh unit FY30E estimate, realization growth of 7–8% YoY could push EBIT margins above our 15% forecast.</div>
+      </div>
+      <div class="risk-item upside">
+        <div class="risk-header"><span class="risk-dot"></span>Export Ramp Optionality</div>
+        <div class="risk-body">Brazil and Southeast Asia penetration, combined with global Harley collaboration, could add 5–8 lakh export units by FY30E — an upside not in our base case.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-meta">
+      <span>Hero MotoCorp Ltd. — Equity Research Report</span>
+      <span>Report Date: June 2026 · Analyst: Parv Neema, IIM Nagpur</span>
+    </div>
+    <div class="footer-text">
+      <strong>Disclaimer:</strong> This report is prepared purely for academic/portfolio showcase purposes as part of an MBA equity research project. It does not constitute investment advice or solicitation to buy or sell securities. Financial projections are based on publicly available information (annual reports, investor presentations) and the author's own assumptions. Actual outcomes may differ materially from estimates. All figures in Indian Rupees (₹) Crore unless stated. The analyst does not hold a position in Hero MotoCorp Ltd. at the time of writing.
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const fy = ['FY21','FY22','FY23','FY24','FY25','FY26E','FY27E','FY28E','FY29E','FY30E'];
+const fyE = ['FY26E','FY27E','FY28E','FY29E','FY30E'];
+
+const blue = '#c0001a';
+const teal = '#8b0013';
+const amber = '#e05a00';
+const violet = '#6b0014';
+const red = '#ff6b7a';
+const gray = '#aaa';
+
+function mkChart(id, cfg) {
+  return new Chart(document.getElementById(id), cfg);
+}
+
+mkChart('c1', {
+  type: 'bar',
+  data: {
+    labels: fy,
+    datasets: [
+      { label: 'Revenue (₹ Cr)', data: [30959,29551,34158,37789,40923,47096,52304,57893,63992,70423], backgroundColor: fy.map((_,i)=> i<5 ? '#c0001a' : '#f0a0aa'), yAxisID:'y' },
+      { label: 'PAT (₹ Cr)', data: [2936,2329,2800,3742,4376,5229,6024,6552,7329,7847], type: 'line', borderColor: '#5c0009', backgroundColor: 'transparent', pointBackgroundColor: '#5c0009', pointRadius: 3, borderWidth: 2, yAxisID:'y2' }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { position:'left', grid:{color:'#f0f0f0'}, ticks:{font:{size:10}, callback:v=>'₹'+(v/1000).toFixed(0)+'k'} },
+      y2: { position:'right', grid:{display:false}, ticks:{font:{size:10}, callback:v=>'₹'+(v/1000).toFixed(1)+'k'} }
+    }
+  }
+});
+
+mkChart('c2', {
+  type: 'line',
+  data: {
+    labels: fy,
+    datasets: [
+      { label: 'EBIT Margin %', data: [12.6,10.5,11.6,13.7,14.7,15.0,15.6,15.3,15.5,15.1], borderColor: '#8b0013', backgroundColor: '#8b001322', fill: true, pointBackgroundColor: '#8b0013', pointRadius: 3, borderWidth: 2 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { min: 8, max: 18, grid:{color:'#f0f0f0'}, ticks:{font:{size:10}, callback:v=>v+'%'} },
+      x: { grid:{display:false}, ticks:{font:{size:10}} }
+    }
+  }
+});
+
+mkChart('c3', {
+  type: 'bar',
+  data: {
+    labels: ['FY22','FY23','FY24','FY25','FY26E','FY27E','FY28E','FY29E','FY30E'],
+    datasets: [
+      { label: 'Entry', data: [11.65,10.52,10.3,9.7,9.89,10.09,10.24,10.40,10.50], backgroundColor: '#d4a0a8' },
+      { label: '125cc Deluxe', data: [3.6,4.1,5.4,6.9,8.28,9.44,10.38,11.11,11.55], backgroundColor: '#8b0013' },
+      { label: 'Scooter', data: [3.05,3.59,3.8,3.3,3.41,3.52,3.62,3.73,3.84], backgroundColor: '#e05a00' },
+      { label: '100cc Deluxe', data: [27.45,32.65,33.6,34.8,37.75,39.63,41.88,44.55,47.08], backgroundColor: '#c0001a' },
+      { label: 'Premium & EV', data: [0.67,0.69,0.9,0.7,0.875,1.05,1.24,1.42,1.60], backgroundColor: '#5c0009' }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: true, position: 'bottom', labels: { font:{size:10}, boxWidth: 10, padding: 8 } }
+    },
+    scales: {
+      x: { stacked: true, grid:{display:false}, ticks:{font:{size:10}} },
+      y: { stacked: true, grid:{color:'#f0f0f0'}, ticks:{font:{size:10}, callback:v=>v+'L'} }
+    }
+  }
+});
+
+mkChart('c4', {
+  type: 'line',
+  data: {
+    labels: fy,
+    datasets: [
+      { label: 'Cash (₹ Cr)', data: [396,300,423,696,574,9521,14092,20481,26586,32896], borderColor: '#c0001a', backgroundColor: '#c0001a22', fill: true, pointRadius: 3, pointBackgroundColor: '#c0001a', borderWidth: 2 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { grid:{color:'#f0f0f0'}, ticks:{font:{size:10}, callback:v=>'₹'+(v/1000).toFixed(0)+'k'} },
+      x: { grid:{display:false}, ticks:{font:{size:10}} }
+    }
+  }
+});
+
+mkChart('c5', {
+  type: 'bar',
+  data: {
+    labels: fyE,
+    datasets: [
+      { label: 'CFO (₹ Cr)', data: [10345,6160,8318,8047,8327], backgroundColor: '#c0001a' },
+      { label: 'Capex (₹ Cr)', data: [-1484,-1522,-1644,-1798,-1971], backgroundColor: '#d4a0a8' }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: true, position: 'bottom', labels: { font:{size:10}, boxWidth:10, padding:8 } } },
+    scales: {
+      x: { grid:{display:false}, ticks:{font:{size:10}} },
+      y: { grid:{color:'#f0f0f0'}, ticks:{font:{size:10}, callback:v=>'₹'+(v/1000).toFixed(0)+'k'} }
+    }
+  }
+});
+</script>
+</body>
+</html>
